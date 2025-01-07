@@ -1,23 +1,30 @@
-import React from 'react';
+import React from "react";
 
-const TableHeader = ({ headers, handleSelectAll, selectedRows, data }) => {
+const TableHeader = ({ headers, handleSort, sortConfig }) => {
   return (
     <thead>
       <tr className="bg-gray-800">
         <th className="p-4">
-          <input
-            type="checkbox"
-            onChange={handleSelectAll}
-            checked={selectedRows.length === data.length}
-            className="h-4 w-4"
-          />
+          <input type="checkbox" className="h-4 w-4" />
         </th>
-        {headers.map((item, idx) => (
+        {headers.map((header, idx) => (
           <th
             key={idx}
-            className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wide"
+            onClick={() => handleSort(header)}
+            className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wide cursor-pointer"
           >
-            {item}
+            {header}
+            <span className="ml-2">
+              {sortConfig?.key === header ? (
+                sortConfig.direction === "asc" ? (
+                  <span>▲</span>
+                ) : (
+                  <span>▼</span>
+                )
+              ) : (
+                <span className="text-gray-400">▲▼</span> // Default arrows
+              )}
+            </span>
           </th>
         ))}
       </tr>
