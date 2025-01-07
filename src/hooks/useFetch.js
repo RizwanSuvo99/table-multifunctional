@@ -17,7 +17,7 @@ const useFetch = (url, options = {}) => {
       }
 
       const result = await response.json();
-      setData(result.data); // Store the API data
+      setData(result); // Store the API data
     } catch (err) {
       setError(err.message); // Store the error
     } finally {
@@ -29,7 +29,7 @@ const useFetch = (url, options = {}) => {
     fetchData();
   }, [url]);
 
-  return { data, loading, error, refetch: fetchData };
+  return { response: data, loading, error, refetch: fetchData };
 };
 
 export default useFetch;

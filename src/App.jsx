@@ -13,9 +13,11 @@ const App = () => {
   const [lastPage, setLastPage] = useState(null);
 
   // Use the custom hook to fetch data with perPage and search string
-  const { data, loading, error, refetch } = useFetch(
+  const { response, loading, error, refetch } = useFetch(
     `https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}`
   );
+
+  console.log(response);
 
   const headers = [
     'Name',
@@ -53,10 +55,10 @@ const App = () => {
       {error && <ErrorToaster message={error} />}
 
       {/* Success State */}
-      {data && <Table headers={headers} data={data} />}
+      {response?.data && <Table headers={headers} data={response.data} />}
 
       {/* Pagination Component */}
-      {data && (
+      {response?.data && (
         <Pagination
           perPage={perPage}
           currentPage={currentPage}
