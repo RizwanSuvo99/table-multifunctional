@@ -1,11 +1,16 @@
-import React from "react";
-import TableRow from "./TableRow";
+import React from 'react';
+import TableRow from './TableRow';
 
-const TableBody = ({ data}) => {
+const TableBody = ({ data, isRowSelected, handleRowSelect }) => {
   return (
     <tbody>
       {data?.map((row, idx) => (
-        <TableRow key={idx} row={row}/>
+        <TableRow
+          key={idx}
+          row={row}
+          isRowSelected={isRowSelected}
+          handleRowSelect={handleRowSelect}
+        />
       ))}
     </tbody>
   );

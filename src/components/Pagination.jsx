@@ -10,7 +10,7 @@ const Pagination = ({
   return (
     <div className="flex items-center justify-between mt-4 text-white">
       {/* Rows per page */}
-      <div>
+      <div className="mr-4">
         <label className="mr-2">Rows per page:</label>
         <select
           value={perPage}
