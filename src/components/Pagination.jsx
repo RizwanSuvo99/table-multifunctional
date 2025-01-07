@@ -1,6 +1,12 @@
 import React from 'react';
 
-const Pagination = ({ perPage, currentPage, onPerPageChange }) => {
+const Pagination = ({
+  perPage,
+  currentPage,
+  totalPages,
+  onPerPageChange,
+  onPageChange,
+}) => {
   return (
     <div className="flex items-center justify-between mt-4 text-white">
       {/* Rows per page */}
@@ -22,29 +28,33 @@ const Pagination = ({ perPage, currentPage, onPerPageChange }) => {
       {/* Pagination Buttons */}
       <div className="flex space-x-2">
         <button
-          //   onClick={() => handlePageChange(1)}
-          className="p-2 bg-gray-700 hover:bg-gray-600 rounded"
+          onClick={() => onPageChange('start')}
+          disabled={currentPage === 1}
+          className="p-2 bg-gray-700 hover:bg-gray-600 rounded disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           Start
         </button>
         <button
-          //   onClick={() => handlePageChange(currentPage - 1)}
+          onClick={() => onPageChange('prev')}
           disabled={currentPage === 1}
           className="p-2 bg-gray-700 hover:bg-gray-600 rounded disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           Previous
         </button>
-        <span className="flex items-center justify-center">{currentPage}</span>
+        <span className="flex items-center justify-center">
+          Page {currentPage} of {totalPages}
+        </span>
         <button
-          //   onClick={() => handlePageChange(currentPage + 1)}
-          //   disabled={currentPage === totalPages}
-          className="p-2 bg-gray-700 hover:bg-gray-600 rounded disabled:bg-gray-500"
+          onClick={() => onPageChange('next')}
+          disabled={currentPage === totalPages}
+          className="p-2 bg-gray-700 hover:bg-gray-600 rounded disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           Next
         </button>
         <button
-          //   onClick={() => handlePageChange(totalPages)}
-          className="p-2 bg-gray-700 hover:bg-gray-600 rounded"
+          onClick={() => onPageChange('end')}
+          disabled={currentPage === totalPages}
+          className="p-2 bg-gray-700 hover:bg-gray-600 rounded disabled:bg-gray-500 disabled:cursor-not-allowed"
         >
           End
         </button>

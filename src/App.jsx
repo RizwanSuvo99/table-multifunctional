@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import ErrorToaster from './components/ErrorToaster';
 import Loader from './components/Loader';
-import Pagination from './components/Pagination'; // Import the Pagination component
-import Search from './components/Search'; // Import the Search component
+import Pagination from './components/Pagination';
+import Search from './components/Search';
 import Table from './components/Table';
 import useFetch from './hooks/useFetch';
 
 const App = () => {
-  const [perPage, setPerPage] = useState(10); // Default rows per page
+  const [perPage, setPerPage] = useState(10);
   const [searchStr, setSearchStr] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [lastPage, setLastPage] = useState(null);
-
-  // Use the custom hook to fetch data with perPage and search string
-  const { response, loading, error, refetch } = useFetch(
-    `https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}`
+  const [apiUrl, setApiUrl] = useState(
+    `https://api.razzakfashion.com/?paginate=10&search=`
   );
 
-  console.log(response);
+  const { response, loading, error, refetch } = useFetch(apiUrl);
 
   const headers = [
     'Name',
@@ -25,21 +22,46 @@ const App = () => {
     'Email Verified At',
     'Created At',
     'Updated At',
-  ]; // Table headers
+  ];
+
+  const totalPages = response?.last_page || 1;
 
   // Handle search input change
   const handleSearch = (query) => {
     setSearchStr(query);
+    setApiUrl(`https://api.razzakfashion.com/?paginate=${perPage}&search=${query}`);
+    setCurrentPage(1); // Reset to the first page when searching
   };
 
   // Handle rows per page change
   const handlePerPageChange = (newPerPage) => {
     setPerPage(newPerPage);
+    setApiUrl(`https://api.razzakfashion.com/?paginate=${newPerPage}&search=${searchStr}`);
+    setCurrentPage(1); // Reset to the first page when rows per page change
+  };
+
+  // Handle page change
+  const handlePageChange = (action) => {
+    if (action === 'next' && response?.next_page_url) {
+      setApiUrl(response.next_page_url);
+      setCurrentPage((prev) => prev + 1);
+    } else if (action === 'prev' && response?.prev_page_url) {
+      setApiUrl(response.prev_page_url);
+      setCurrentPage((prev) => prev - 1);
+    } else if (action === 'start') {
+      setApiUrl(`https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}`);
+      setCurrentPage(1);
+    } else if (action === 'end') {
+      setApiUrl(
+        `https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}&page=${totalPages}`
+      );
+      setCurrentPage(totalPages);
+    }
   };
 
   useEffect(() => {
     refetch();
-  }, [perPage, searchStr]);
+  }, [apiUrl]);
 
   return (
     <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-6">
@@ -62,7 +84,9 @@ const App = () => {
         <Pagination
           perPage={perPage}
           currentPage={currentPage}
+          totalPages={totalPages}
           onPerPageChange={handlePerPageChange}
+          onPageChange={handlePageChange}
         />
       )}
     </div>
