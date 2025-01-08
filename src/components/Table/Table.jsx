@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import TableBody from './TableBody';
-import TableHeader from './TableHeader';
+import TableBody from '../TableBody/TableBody';
+import TableHeader from '../TableHeader/TableHeader';
 
 const Table = ({ headers, data, filteredData, setFilteredData }) => {
   const [selectedRows, setSelectedRows] = useState([]);
@@ -64,7 +64,7 @@ const Table = ({ headers, data, filteredData, setFilteredData }) => {
 
   return (
     <div className="p-4">
-      <table className="min-w-full bg-[#19191E] text-white rounded-lg overflow-hidden">
+      <table className="min-w-full bg-[#19191E] text-white rounded-lg overflow-hidden min-h-40">
         <TableHeader
           headers={headers}
           selectedRows={selectedRows}

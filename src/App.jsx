@@ -3,7 +3,7 @@ import ErrorToaster from './components/ErrorToaster';
 import Loader from './components/Loader';
 import Pagination from './components/Pagination';
 import Search from './components/Search';
-import Table from './components/Table';
+import Table from './components/Table/Table';
 import useFetch from './hooks/useFetch';
 
 const App = () => {
