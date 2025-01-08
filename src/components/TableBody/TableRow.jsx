@@ -5,7 +5,7 @@ import TableData from './TableData';
 const TableRow = ({ row, isRowSelected, handleRowSelect }) => {
   return (
     <tr className="border-b border-gray-700 hover:bg-gray-800 transition">
-      <td className="p-4">
+      <td className="px-14">
         <input
           type="checkbox"
           checked={isRowSelected(row.id)}

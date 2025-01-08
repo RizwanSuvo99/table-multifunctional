@@ -30,7 +30,7 @@ const TableHeader = ({
         {headers.map((header, idx) => (
           <th
             key={idx}
-            className="px-6 py-3 text-left text-sm font-medium uppercase tracking-wide relative"
+            className="px-14 py-4 text-left text-sm font-medium uppercase tracking-wide relative"
           >
             <div className="flex items-center gap-4">
               <SortHeader

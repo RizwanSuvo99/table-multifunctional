@@ -64,7 +64,7 @@ const Table = ({ headers, data, filteredData, setFilteredData }) => {
 
   return (
     <div className="p-4">
-      <table className="min-w-full bg-[#19191E] text-white rounded-lg overflow-hidden min-h-40">
+      <table className="bg-[#19191E] text-white rounded-lg overflow-hidden min-h-40">
         <TableHeader
           headers={headers}
           selectedRows={selectedRows}

@@ -1,5 +1,5 @@
 const CheckboxSelectAll = ({ handleSelectAll, selectedRows, data }) => (
-  <th className="p-4">
+  <th className="px-14 py-4">
     <input
       type="checkbox"
       onChange={handleSelectAll}

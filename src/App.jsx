@@ -76,7 +76,7 @@ const App = () => {
   }, [apiUrl]);
 
   return (
-    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center">
       <h1 className="text-2xl font-bold mb-4 text-white">User Information</h1>
 
       {/* Search component */}
