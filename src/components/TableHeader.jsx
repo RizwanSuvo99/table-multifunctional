@@ -29,12 +29,19 @@ const TableHeader = ({
             <span className="ml-2">
               {sortConfig?.key === header ? (
                 sortConfig.direction === 'asc' ? (
-                  <span>▲</span>
+                  <span>
+                    <i className="fa-solid fa-arrow-up"></i>
+                  </span>
                 ) : (
-                  <span>▼</span>
+                  <span>
+                    <i className="fa-solid fa-arrow-down"></i>
+                  </span>
                 )
               ) : (
-                <span className="text-gray-400">▲▼</span> // Default arrows
+                <span className="text-gray-400">
+                  <i className="fa-solid fa-arrow-up"></i>
+                  <i className="fa-solid fa-arrow-down"></i>
+                </span>
               )}
             </span>
           </th>

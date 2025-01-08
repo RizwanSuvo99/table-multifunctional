@@ -15,7 +15,6 @@ const App = () => {
   );
 
   const { response, loading, error, refetch } = useFetch(apiUrl);
-
   const headers = [
     'Name',
     'Email',
@@ -23,24 +22,21 @@ const App = () => {
     'Created At',
     'Updated At',
   ];
-
   const totalPages = response?.last_page || 1;
 
-  // Handle search input change
   const handleSearch = (query) => {
     setSearchStr(query);
     setApiUrl(`https://api.razzakfashion.com/?paginate=${perPage}&search=${query}`);
-    setCurrentPage(1); // Reset to the first page when searching
+    setCurrentPage(1); 
   };
 
-  // Handle rows per page change
   const handlePerPageChange = (newPerPage) => {
     setPerPage(newPerPage);
     setApiUrl(`https://api.razzakfashion.com/?paginate=${newPerPage}&search=${searchStr}`);
-    setCurrentPage(1); // Reset to the first page when rows per page change
+    setCurrentPage(1);
   };
 
-  // Handle page change
+
   const handlePageChange = (action) => {
     if (action === 'next' && response?.next_page_url) {
       setApiUrl(response.next_page_url);

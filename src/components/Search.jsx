@@ -4,19 +4,16 @@ const Search = ({ onSearch }) => {
   const [query, setQuery] = useState('');
   const [debounceTimer, setDebounceTimer] = useState(null);
 
-  // Handle change in the search input
   const handleChange = (e) => {
     const value = e.target.value;
     setQuery(value);
 
-    // Clear the previous timer
     if (debounceTimer) {
       clearTimeout(debounceTimer);
     }
 
-    // Set a new timer to call the onSearch function after 500ms delay
     const timer = setTimeout(() => {
-      onSearch(value); // Call the parent onSearch function after the delay
+      onSearch(value);
     }, 500);
 
     setDebounceTimer(timer);

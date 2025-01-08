@@ -8,7 +8,7 @@ const useDebounce = (value, delay) => {
       setDebouncedValue(value);
     }, delay);
 
-    return () => clearTimeout(handler); // Cleanup timeout on value or delay change
+    return () => clearTimeout(handler);
   }, [value, delay]);
 
   return debouncedValue;

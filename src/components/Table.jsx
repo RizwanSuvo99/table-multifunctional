@@ -3,35 +3,34 @@ import TableBody from "./TableBody";
 import TableHeader from "./TableHeader";
 
 const Table = ({ headers, data }) => {
-  const [selectedRows, setSelectedRows] = useState([]); // State to track selected rows
-  const [sortConfig, setSortConfig] = useState(null); // State for sorting configuration
-  const [sortedData, setSortedData] = useState(data); // State for sorted data
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [sortConfig, setSortConfig] = useState(null);
+  const [sortedData, setSortedData] = useState(data); 
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedRows(data.map((item) => item.id)); // Select all rows
+      setSelectedRows(data.map((item) => item.id)); 
     } else {
-      setSelectedRows([]); // Deselect all rows
+      setSelectedRows([]);
     }
   };
   const handleRowSelect = (id) => {
     if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter((rowId) => rowId !== id)); // Remove if already selected
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id)); 
     } else {
-      setSelectedRows([...selectedRows, id]); // Add if not selected
+      setSelectedRows([...selectedRows, id]); 
     }
   };
   const isRowSelected = (id) => selectedRows.includes(id);
 
-  // Handle Sorting
   const handleSort = (header) => {
-    let direction = "asc"; // Default to ascending
+    let direction = "asc"; 
     if (sortConfig?.key === header && sortConfig.direction === "asc") {
-      direction = "desc"; // Toggle to descending
+      direction = "desc";
     }
 
     const sorted = [...data].sort((a, b) => {
-      const key = header.toLowerCase().replace(/\s+/g, "_"); // Match keys like 'Created At' -> 'created_at'
+      const key = header.toLowerCase().replace(/\s+/g, "_");
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
