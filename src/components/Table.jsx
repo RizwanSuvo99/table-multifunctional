@@ -5,39 +5,62 @@ import TableHeader from "./TableHeader";
 const Table = ({ headers, data }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [sortConfig, setSortConfig] = useState(null);
-  const [sortedData, setSortedData] = useState(data); 
+  const [filters, setFilters] = useState({});
+  const [filteredData, setFilteredData] = useState(data);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedRows(data.map((item) => item.id)); 
+      setSelectedRows(data.map((item) => item.id));
     } else {
       setSelectedRows([]);
     }
   };
+
   const handleRowSelect = (id) => {
     if (selectedRows.includes(id)) {
-      setSelectedRows(selectedRows.filter((rowId) => rowId !== id)); 
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
     } else {
-      setSelectedRows([...selectedRows, id]); 
+      setSelectedRows([...selectedRows, id]);
     }
   };
+
   const isRowSelected = (id) => selectedRows.includes(id);
 
   const handleSort = (header) => {
-    let direction = "asc"; 
+    let direction = "asc";
     if (sortConfig?.key === header && sortConfig.direction === "asc") {
       direction = "desc";
     }
 
-    const sorted = [...data].sort((a, b) => {
+    const sorted = [...filteredData].sort((a, b) => {
       const key = header.toLowerCase().replace(/\s+/g, "_");
       if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
       if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
       return 0;
     });
 
-    setSortedData(sorted);
+    setFilteredData(sorted);
     setSortConfig({ key: header, direction });
+  };
+
+  const handleFilterChange = (header, value) => {
+    const updatedFilters = {
+      ...filters,
+      [header]: value,
+    };
+
+    setFilters(updatedFilters);
+
+    const filtered = data.filter((item) => {
+      return Object.keys(updatedFilters).every((key) => {
+        const fieldValue = item[key.toLowerCase().replace(/\s+/g, "_")];
+        return String(fieldValue)
+          .toLowerCase()
+          .includes(updatedFilters[key]?.toLowerCase() || "");
+      });
+    });
+
+    setFilteredData(filtered);
   };
 
   return (
@@ -50,9 +73,11 @@ const Table = ({ headers, data }) => {
           handleSort={handleSort}
           sortConfig={sortConfig}
           data={data}
+          onFilterChange={handleFilterChange}
+          filters={filters}
         />
         <TableBody
-          data={sortedData}
+          data={filteredData}
           isRowSelected={isRowSelected}
           handleRowSelect={handleRowSelect}
         />
