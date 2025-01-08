@@ -7,7 +7,6 @@ const Table = ({ headers, data }) => {
   const [sortConfig, setSortConfig] = useState(null); // State for sorting configuration
   const [sortedData, setSortedData] = useState(data); // State for sorted data
 
-  // Handle Select All checkbox
   const handleSelectAll = (e) => {
     if (e.target.checked) {
       setSelectedRows(data.map((item) => item.id)); // Select all rows
@@ -15,8 +14,6 @@ const Table = ({ headers, data }) => {
       setSelectedRows([]); // Deselect all rows
     }
   };
-
-  // Handle individual row selection
   const handleRowSelect = (id) => {
     if (selectedRows.includes(id)) {
       setSelectedRows(selectedRows.filter((rowId) => rowId !== id)); // Remove if already selected
@@ -24,7 +21,6 @@ const Table = ({ headers, data }) => {
       setSelectedRows([...selectedRows, id]); // Add if not selected
     }
   };
-
   const isRowSelected = (id) => selectedRows.includes(id);
 
   // Handle Sorting

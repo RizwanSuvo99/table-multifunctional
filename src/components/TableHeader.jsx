@@ -1,11 +1,23 @@
-import React from "react";
+import React from 'react';
 
-const TableHeader = ({ headers, handleSort, sortConfig }) => {
+const TableHeader = ({
+  headers,
+  handleSort,
+  sortConfig,
+  handleSelectAll,
+  selectedRows,
+  data,
+}) => {
   return (
     <thead>
       <tr className="bg-gray-800">
         <th className="p-4">
-          <input type="checkbox" className="h-4 w-4" />
+          <input
+            type="checkbox"
+            onChange={handleSelectAll}
+            checked={selectedRows.length === data.length}
+            className="h-4 w-4"
+          />
         </th>
         {headers.map((header, idx) => (
           <th
@@ -16,7 +28,7 @@ const TableHeader = ({ headers, handleSort, sortConfig }) => {
             {header}
             <span className="ml-2">
               {sortConfig?.key === header ? (
-                sortConfig.direction === "asc" ? (
+                sortConfig.direction === 'asc' ? (
                   <span>▲</span>
                 ) : (
                   <span>▼</span>
