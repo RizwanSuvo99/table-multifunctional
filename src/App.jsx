@@ -14,6 +14,8 @@ const App = () => {
     `https://api.razzakfashion.com/?paginate=10&search=`
   );
 
+  const [filteredData, setFilteredData] = useState(null);
+
   const { response, loading, error, refetch } = useFetch(apiUrl);
 
   const headers = [
@@ -29,29 +31,39 @@ const App = () => {
   // Handle search input change
   const handleSearch = (query) => {
     setSearchStr(query);
-    setApiUrl(`https://api.razzakfashion.com/?paginate=${perPage}&search=${query}`);
+    setApiUrl(
+      `https://api.razzakfashion.com/?paginate=${perPage}&search=${query}`
+    );
     setCurrentPage(1); // Reset to the first page when searching
   };
 
   // Handle rows per page change
   const handlePerPageChange = (newPerPage) => {
     setPerPage(newPerPage);
-    setApiUrl(`https://api.razzakfashion.com/?paginate=${newPerPage}&search=${searchStr}`);
+    setApiUrl(
+      `https://api.razzakfashion.com/?paginate=${newPerPage}&search=${searchStr}`
+    );
     setCurrentPage(1); // Reset to the first page when rows per page change
   };
 
   // Handle page change
   const handlePageChange = (action) => {
     if (action === 'next' && response?.next_page_url) {
+      setFilteredData(null);
       setApiUrl(response.next_page_url);
       setCurrentPage((prev) => prev + 1);
     } else if (action === 'prev' && response?.prev_page_url) {
+      setFilteredData(null);
       setApiUrl(response.prev_page_url);
       setCurrentPage((prev) => prev - 1);
     } else if (action === 'start') {
-      setApiUrl(`https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}`);
+      setFilteredData(null);
+      setApiUrl(
+        `https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}`
+      );
       setCurrentPage(1);
     } else if (action === 'end') {
+      setFilteredData(null);
       setApiUrl(
         `https://api.razzakfashion.com/?paginate=${perPage}&search=${searchStr}&page=${totalPages}`
       );
@@ -77,7 +89,14 @@ const App = () => {
       {error && <ErrorToaster message={error} />}
 
       {/* Success State */}
-      {response?.data && <Table headers={headers} data={response.data} />}
+      {response?.data && (
+        <Table
+          headers={headers}
+          data={response.data}
+          filteredData={filteredData}
+          setFilteredData={setFilteredData}
+        />
+      )}
 
       {/* Pagination Component */}
       {response?.data && (

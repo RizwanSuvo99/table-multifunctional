@@ -92,7 +92,7 @@ const TableHeader = ({
                   <input
                     type="text"
                     placeholder={`Filter ${header}`}
-                    className="w-full rounded-lg shadow-sm focus:outline-none text-sm bg-[#f1d25b] placeholder:text-black"
+                    className="w-full rounded-lg shadow-sm focus:outline-none text-sm bg-[#f1d25b] placeholder:text-gray"
                     value={filters[header] || ''}
                     onChange={(e) => onFilterChange(header, e.target.value)}
                     onKeyDown={handleFilterKeyPress} // Close on Enter

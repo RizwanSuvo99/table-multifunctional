@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
-const Table = ({ headers, data }) => {
+const Table = ({ headers, data, filteredData, setFilteredData }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [sortConfig, setSortConfig] = useState(null);
   const [filters, setFilters] = useState({});
-  const [filteredData, setFilteredData] = useState(null);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
