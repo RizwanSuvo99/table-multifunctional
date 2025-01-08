@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import TableBody from "./TableBody";
-import TableHeader from "./TableHeader";
+import React, { useState } from 'react';
+import TableBody from './TableBody';
+import TableHeader from './TableHeader';
 
 const Table = ({ headers, data }) => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [sortConfig, setSortConfig] = useState(null);
   const [filters, setFilters] = useState({});
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState(null);
 
   const handleSelectAll = (e) => {
     if (e.target.checked) {
@@ -27,15 +27,15 @@ const Table = ({ headers, data }) => {
   const isRowSelected = (id) => selectedRows.includes(id);
 
   const handleSort = (header) => {
-    let direction = "asc";
-    if (sortConfig?.key === header && sortConfig.direction === "asc") {
-      direction = "desc";
+    let direction = 'asc';
+    if (sortConfig?.key === header && sortConfig.direction === 'asc') {
+      direction = 'desc';
     }
 
-    const sorted = [...filteredData].sort((a, b) => {
-      const key = header.toLowerCase().replace(/\s+/g, "_");
-      if (a[key] < b[key]) return direction === "asc" ? -1 : 1;
-      if (a[key] > b[key]) return direction === "asc" ? 1 : -1;
+    const sorted = [...data].sort((a, b) => {
+      const key = header.toLowerCase().replace(/\s+/g, '_');
+      if (a[key] < b[key]) return direction === 'asc' ? -1 : 1;
+      if (a[key] > b[key]) return direction === 'asc' ? 1 : -1;
       return 0;
     });
 
@@ -53,10 +53,10 @@ const Table = ({ headers, data }) => {
 
     const filtered = data.filter((item) => {
       return Object.keys(updatedFilters).every((key) => {
-        const fieldValue = item[key.toLowerCase().replace(/\s+/g, "_")];
+        const fieldValue = item[key.toLowerCase().replace(/\s+/g, '_')];
         return String(fieldValue)
           .toLowerCase()
-          .includes(updatedFilters[key]?.toLowerCase() || "");
+          .includes(updatedFilters[key]?.toLowerCase() || '');
       });
     });
 
@@ -77,7 +77,7 @@ const Table = ({ headers, data }) => {
           filters={filters}
         />
         <TableBody
-          data={filteredData}
+          data={filteredData || data}
           isRowSelected={isRowSelected}
           handleRowSelect={handleRowSelect}
         />

@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 
 const useFetch = (url, options = {}) => {
-  const [data, setData] = useState(null); 
-  const [loading, setLoading] = useState(true); 
-  const [error, setError] = useState(null); 
+  const [data, setData] = useState(null); // Success state
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
   const fetchData = useCallback(async () => {
     setLoading(true);
-    setError(null); 
+    setError(null); // Reset error state
 
     try {
       const response = await fetch(url);
@@ -17,11 +17,11 @@ const useFetch = (url, options = {}) => {
       }
 
       const result = await response.json();
-      setData(result); 
+      setData(result); // Store the API data
     } catch (err) {
-      setError(err.message);
+      setError(err.message); // Store the error
     } finally {
-      setLoading(false); 
+      setLoading(false); // Stop loading
     }
   }, [url]);
 
